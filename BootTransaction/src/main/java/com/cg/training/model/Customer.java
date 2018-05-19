@@ -60,6 +60,15 @@ public class Customer {
 		this.name = name;
 		this.pin = pin;
 	}
+	
+	public Customer(final  Bank bankId, final String name,final  int pin) {
+		super();
+		
+		this.bankId=bankId;
+		this.name = name;
+		this.pin = pin;
+	}
+	
 	public void setBankId(final Bank bankId) {
 		this.bankId = bankId;
 	}
