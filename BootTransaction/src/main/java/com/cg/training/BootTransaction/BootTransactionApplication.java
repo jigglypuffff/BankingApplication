@@ -1,4 +1,4 @@
-package com.cg.training;
+package com.cg.training.BootTransaction;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,11 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class BootTransactionApplication {
 
-	public static void main(final String[] args) {
+	public static void main(String[] args) {
 		SpringApplication.run(BootTransactionApplication.class, args);
-	
 	}
-	
-
-	
 }
