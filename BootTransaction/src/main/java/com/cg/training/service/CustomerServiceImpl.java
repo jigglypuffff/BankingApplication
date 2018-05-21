@@ -32,7 +32,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public Customer createCustomer(final CustomerWrapper customer) {
 		log.info("create a new customer");
-		try {
+		try { 
 			
 			//final List<Bank> bankOpt=	bankService.getBankDetailsById();
 		final Optional<Bank> bankOpt = bankRepository.findById(customer.getbId());

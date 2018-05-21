@@ -33,7 +33,7 @@ public class Customer {
 	 */
 	@NotNull
 	private String name;
-	
+	 
 	/**
 	 customer pin 
 	 */

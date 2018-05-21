@@ -6,17 +6,21 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.cg.training.exception.BankException;
 import com.cg.training.model.Bank;
+import com.cg.training.model.Customer;
 import com.cg.training.repo.BankRepository;
+import com.cg.training.repo.CustomerRepository;
 import com.cg.training.service.BankServiceImpl;
 
 
@@ -30,6 +34,9 @@ public class BankTests {
 
 	@Mock
 	BankRepository bankRepo;
+	
+	@Mock
+	CustomerRepository custRepo;
 	
 	@InjectMocks
 	BankServiceImpl bankSer;

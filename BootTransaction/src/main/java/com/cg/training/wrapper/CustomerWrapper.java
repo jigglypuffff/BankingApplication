@@ -18,6 +18,12 @@ public class CustomerWrapper {
 	private Customer customer;
 	
 	
+	public CustomerWrapper(Integer bId, Customer customer) {
+		super();
+		this.bId = bId;
+		this.customer = customer;
+	}
+
 	public Customer getCustomer() {
 		return customer;
 	}
