@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.training.model.Account;
+import com.cg.training.model.Transaction;
 import com.cg.training.service.AccountService;
 import com.cg.training.wrapper.AccountWrapper;
 import com.cg.training.wrapper.WithdrawDepositReq;
@@ -27,7 +28,7 @@ public class AccountController {
 	/**
 	 Reference of accountService 
 	 */
-	@Autowired
+	@Autowired 
 	AccountService accountSer;
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -55,4 +56,13 @@ public class AccountController {
 		return accountSer.withdrawMoney(wrap);
 
 	}
+	
+
+	@RequestMapping(value = "/viewReport", method = RequestMethod.GET)
+	public List<Transaction> showTransReport() {
+		log.info("Show transaction report");
+		return accountSer.viewTransReport();
+	}
+
+	
 }

@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.cfg.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +32,9 @@ public class AccountServiceImpl implements AccountService {
 
 	/** Logger to log details */
 	static final Logger log = Logger.getLogger(AccountService.class.getName());
+	
+	/*@Autowired
+	Environment env;*/
 
 	/** Reference of AccountRepository */
 	@Autowired
@@ -42,7 +46,7 @@ public class AccountServiceImpl implements AccountService {
 	CustomerRepository custRepo;
 	/**
 	 * BankRepository reference
-	 */
+	 */ 
 	@Autowired
 	BankRepository bankRepo;
 
@@ -56,7 +60,7 @@ public class AccountServiceImpl implements AccountService {
 	 Customer service reference 
 	 */
 	@Autowired
-	CustomerServiceImpl custSer;
+	CustomerServiceImpl custSer;  
 
 	/**
 	 * TransactionRepository reference
@@ -119,19 +123,23 @@ public class AccountServiceImpl implements AccountService {
 
 			account.setAmount(updatedAmount);
 
-			bank.setAmount(updatedAmount);
+			bank.setAmount(updatedAmount); 
 
 			bankRepo.save(bank);
 
 			accRepo.save(account);
+			
 			final Transaction trsansact = new Transaction(withdraw.getCustomerId(), accountId, withdrawAmt, "Withdraw");
 
 			trans.save(trsansact);
 
 			return "success";
+		
 		} catch (BankException e) {
-			throw new BankException("Insufficient balance");
+			
+			e.getMessage();
 		}
+		return "success";
 
 	}
 

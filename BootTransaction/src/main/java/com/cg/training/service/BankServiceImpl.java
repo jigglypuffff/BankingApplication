@@ -1,4 +1,4 @@
-package com.cg.training.service;
+ package com.cg.training.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,8 +29,17 @@ public class BankServiceImpl implements BankService {
 	
 	@Override
 	public Bank createBank(final Bank bank) {
-		log.info("Create bank");
-		return bankDao.save(bank);
+		
+		if(bank.getBankId()>=1)
+		{
+			log.info("Create bank");
+		
+			return bankDao.save(bank);
+		}
+		else
+		{
+			throw new BankException(" Zero or Negative Id Not Found");
+		}
 
 	}
 
