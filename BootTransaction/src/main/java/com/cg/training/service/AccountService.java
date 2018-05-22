@@ -1,6 +1,7 @@
 package com.cg.training.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.cg.training.model.Account;
 import com.cg.training.model.Transaction;
@@ -17,9 +18,16 @@ public interface AccountService {
 	 * @return new Account */
 	 Account createAccount(AccountWrapper account);
 
-	/*** This method is used to create account
+	/*** This method is used to get details of all accounts
 	 * @returns List of all Account's Details*/ 
 	 List<Account> getAccountDetails();
+	 
+	 
+	 /**
+	 This method is used to get account details by id
+	 * @return account details associated with one id
+	 */
+	 Optional<Account> getAccountDetailsById(Integer id);
 
 	/**
 	 * This method is used to withdraw amount  

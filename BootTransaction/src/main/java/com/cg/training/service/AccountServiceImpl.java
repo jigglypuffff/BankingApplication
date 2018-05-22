@@ -63,21 +63,23 @@ public class AccountServiceImpl implements AccountService {
 	CustomerServiceImpl custSer;  
 
 	/**
-	 * TransactionRepository reference
+	 * TransactionRepository reference 
 	 */
 	@Autowired
 	TransactionRepository trans;
 
 	@Override
-	public Account createAccount(final AccountWrapper account) {
+	public Account createAccount(final AccountWrapper account) { 
 
-		log.info("Withdraw Section");
-		try {
+		log.info("Create Account Section");
+	
 
 			final Customer customer = custSer.getCustomerDetailById(account.getcId()).get();
 
 			final Bank bank = bankSer.getBankDetailById(account.getbId()).get();
 
+			if(bank!=null)
+			{
 			final Account acc = new Account();
 
 			acc.setCustomerId(customer);
@@ -93,9 +95,13 @@ public class AccountServiceImpl implements AccountService {
 			bank.setAmount(newBankAmt);
 
 			return accRepo.save(acc);
-		} catch (BankException e) {
-			throw new BankException("id not found");
-		}
+			}
+			else
+			{
+				throw new BankException("details invalid");
+			}
+		
+			
 
 	}
 
@@ -103,7 +109,7 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public String withdrawMoney(final WithdrawDepositReq withdraw) {
 
-		log.info("Create Account Section");
+		log.info("Withdraw Section" );
 
 		final Integer bankid = withdraw.getBankId();
 		Bank bank = bankSer.getBankDetailById(withdraw.getBankId()).get();
@@ -149,6 +155,13 @@ public class AccountServiceImpl implements AccountService {
 		log.info("View All Account Details");
 		return accRepo.findAll();
 	}
+	
+	@Override
+	public Optional<Account> getAccountDetailsById(Integer id) {
+		Optional<Account> account = accRepo.findById(id);
+		return account;
+	}
+	
 
 	@Transactional
 	@Override
@@ -225,4 +238,6 @@ public class AccountServiceImpl implements AccountService {
 
 		return trans.findAll();
 	}
+
+	
 }

@@ -24,5 +24,5 @@ public interface BankService {
 	 * @param id
 	 * @return
 	 */
-	Optional<Bank> getBankDetailById(Integer id);
+	public Optional<Bank> getBankDetailById(final Integer id);
 }

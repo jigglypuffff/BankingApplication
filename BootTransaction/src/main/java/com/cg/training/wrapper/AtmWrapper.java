@@ -19,6 +19,11 @@ public class AtmWrapper {
 	
 	
 	
+	public AtmWrapper(Integer bankId, BigDecimal amount) {
+		super();
+		this.bankId = bankId;
+		this.amount = amount;
+	}
 	public Integer getBankId() {
 		return bankId;
 	}

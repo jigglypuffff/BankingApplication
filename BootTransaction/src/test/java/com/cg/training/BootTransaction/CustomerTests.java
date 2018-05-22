@@ -50,7 +50,7 @@ public class CustomerTests {
 		when(custRepo.save(customer)).thenReturn(customer);
 
 		assertThat(custSer.createCustomer(cust), is(notNullValue()));
-	
+		
 
 	}
 
@@ -66,6 +66,27 @@ public class CustomerTests {
 		when(bankRepo.findById(Mockito.any(Integer.class))).thenReturn(ob);
 		when(custRepo.save(customer)).thenReturn(customer);
 
+	}
+	
+	
+	@Test
+	public void viewCustomerById()
+	{
+		Bank bank = new Bank(1, new BigDecimal(1000));
+		
+		Optional<Bank> ob = Optional.of(bank);
+		
+		final Customer customer = new Customer(1, bank, "aishu", 4842);
+		
+		Optional<Customer> cob = Optional.of(customer);
+
+		final CustomerWrapper cust = new CustomerWrapper(1, customer);
+			
+		when(custRepo.findById(1)).thenReturn(cob);
+		
+		assertThat(custSer.getCustomerDetailById(1), is(notNullValue()));
+		
+		
 	}
 
 }

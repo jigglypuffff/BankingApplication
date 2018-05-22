@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
  *
  */
 @Entity
-public class Account {
+public class Account { 
 
 	/**
 	 Account Id
@@ -24,14 +24,22 @@ public class Account {
 	private Integer accountId;
 	
 	
+	public Account(Integer accountId, @NotNull Customer customerId, @NotNull BigDecimal amount, @NotNull Bank bankId) {
+		super();
+		this.accountId = accountId;
+		this.customerId = customerId;
+		this.amount = amount;
+		this.bankId = bankId;
+	}
+
 	/** Customer Id  */
 	@NotNull
 	@ManyToOne(targetEntity=Customer.class)
 	private Customer customerId;
 	
 	/** Amount  */
-	@NotNull
-	private BigDecimal amount;
+	@NotNull 
+	private BigDecimal amount; 
 	
 	/** Customer Id  */
 	@NotNull

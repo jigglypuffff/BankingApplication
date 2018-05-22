@@ -35,9 +35,7 @@ public class BankTests {
 	@Mock
 	BankRepository bankRepo;
 	
-	@Mock
-	CustomerRepository custRepo;
-	
+
 	@InjectMocks
 	BankServiceImpl bankSer;
 	
@@ -57,9 +55,22 @@ public class BankTests {
 	public void createBanks()
 	{
 		Bank bank = new Bank(-1,new BigDecimal(2000));
-		when(bankSer.createBank(bank)).thenThrow(new BankException(" Zero or Negative Id Not Found"));
+		when(bankSer.createBank(bank)).thenThrow(new BankException("Zero or Negative Id Not Found"));
 		
 	}
+	
+	
+	@Test
+	public void viewBankById()
+	{
+		final Bank bank = new Bank(1,new BigDecimal(1000));
+		Optional<Bank> bnk = Optional.of(bank);
+		
+		when(bankRepo.findById(1)).thenReturn(bnk);
+		assertThat(bankSer.getBankDetailById(1), is(notNullValue()));
+	
+	}
+	
 
 }
 		

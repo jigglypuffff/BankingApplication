@@ -23,6 +23,12 @@ public class AccountWrapper {
 	
 	
 	
+	public AccountWrapper(BigDecimal amount, Integer bId, Integer cId) {
+		super();
+		this.amount = amount;
+		this.bId = bId;
+		this.cId = cId;
+	}
 	public BigDecimal getAmount() {
 		return amount;
 	}

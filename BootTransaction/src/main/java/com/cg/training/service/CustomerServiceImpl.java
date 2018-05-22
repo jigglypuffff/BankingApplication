@@ -21,43 +21,46 @@ import com.cg.training.wrapper.CustomerWrapper;
 @Service
 public class CustomerServiceImpl implements CustomerService {
 	static final Logger log = Logger.getLogger(CustomerService.class.getName());
-	
+
 	@Autowired
 	CustomerRepository customerRepo;
-	
-	//BankService bankService;
+	@Autowired
+	BankServiceImpl bankService;
 	@Autowired
 	BankRepository bankRepository;
 
 	@Override
 	public Customer createCustomer(final CustomerWrapper customer) {
 		log.info("create a new customer");
-		try { 
 			
-			//final List<Bank> bankOpt=	bankService.getBankDetailsById();
-		final Optional<Bank> bankOpt = bankRepository.findById(customer.getbId());
-		final Bank bank = bankOpt.get();
-			final Customer cust = customer.getCustomer();
-			cust.setBankId(bank);
-			return customerRepo.save(cust);
-		} catch(BankException e)
-		{
-			throw new BankException ("id not found");
+			final Optional<Bank> bankOpt = bankRepository.findById(customer.getbId());
 			
-		}
-	}
+		
+			final Bank bank = bankOpt.get();
+			 
+			if(bankOpt.isPresent())
+			{ 
+				final Customer cust = customer.getCustomer();
+				cust.setBankId(bank);
+				return customerRepo.save(cust);
+			}
+			else
+			{
+				throw new BankException("Customer or bank details is invalid");
+			}
+		} 
+	
 
-	@Override
+	@Override 
 	public List<Customer> getCustomers() {
 		log.info("view list of all customers");
 		return customerRepo.findAll();
 	}
-	
+
 	@Override
-	public Optional<Customer> getCustomerDetailById(final Integer id)
-	{
+	public Optional<Customer> getCustomerDetailById(final Integer id) {
 		log.info("view details of customer by id");
-		Optional<Customer> customer  = customerRepo.findById(id);
+		Optional<Customer> customer = customerRepo.findById(id);
 		return customer;
 	}
 

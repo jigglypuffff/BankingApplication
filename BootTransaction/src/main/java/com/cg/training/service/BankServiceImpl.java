@@ -22,7 +22,7 @@ public class BankServiceImpl implements BankService {
 	 
 	 */
 	@Autowired 
-	BankRepository bankDao;
+	BankRepository bankRepo;
 
 	static final Logger log = Logger.getLogger(BankService.class.getName()); 
 	
@@ -34,11 +34,11 @@ public class BankServiceImpl implements BankService {
 		{
 			log.info("Create bank");
 		
-			return bankDao.save(bank);
+			return bankRepo.save(bank);
 		}
 		else
 		{
-			throw new BankException(" Zero or Negative Id Not Found");
+			throw new BankException("Zero or Negative Id Not Found");
 		}
 
 	}
@@ -46,13 +46,15 @@ public class BankServiceImpl implements BankService {
 	@Override
 	public List<Bank> getBankDetails() {
 		log.info("view bank details");
-		return bankDao.findAll();
+		return bankRepo.findAll();
 	}
-
+	
+	
+	@Override
 	public Optional<Bank> getBankDetailById(final Integer id) {
 		log.info("viewBankDetailsbyId");
 		try {
-			final Optional<Bank> bank = bankDao.findById(id);
+			final Optional<Bank> bank = bankRepo.findById(id);
 			return bank;
 		} catch (BankException e) {
 			throw new BankException("Id not found");

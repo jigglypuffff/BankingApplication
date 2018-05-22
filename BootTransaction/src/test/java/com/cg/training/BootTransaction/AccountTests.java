@@ -1,4 +1,4 @@
-/*package com.cg.banking;
+package com.cg.training.BootTransaction;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -20,78 +20,104 @@ import com.cg.training.exception.BankException;
 import com.cg.training.model.Account;
 import com.cg.training.model.Bank;
 import com.cg.training.model.Customer;
+import com.cg.training.model.Transaction;
 import com.cg.training.repo.AccountRepository;
 import com.cg.training.repo.BankRepository;
 import com.cg.training.repo.CustomerRepository;
 import com.cg.training.service.AccountServiceImpl;
-
-
+import com.cg.training.wrapper.AccountWrapper;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class AccountTest {
+public class AccountTests {
 
 	@Mock
 	private AccountRepository accRepo;
-	
+
 	@Mock
 	private CustomerRepository custRepo;
-	
+
 	@Mock
 	private BankRepository bankRepo;
-	
+
 	@InjectMocks
 	private AccountServiceImpl accSer;
-	
-	
+
 	@Test
 	public void createAccount() {
-		final Bank bank = new Bank(1,new BigDecimal(1000));
 		
+		final Bank bank = new Bank(1, new BigDecimal(1000));
+
 		Optional<Bank> bnk = Optional.of(bank);
-		
+
 		final Customer customer = new Customer(1, bank, "aishu", 4842);
-		customer.setCustomerId(4);
+		
 		Optional<Customer> cust = Optional.of(customer);
-		
-		Account account = new Account(new BigDecimal(4000),1,1);
-		
-		
-		AccountRequest accReq=new AccountRequest(1, 4, account);
-		
+
+		Account acc = new Account(1, customer, new BigDecimal(1000), bank);
+
+		AccountWrapper accReq = new AccountWrapper(new BigDecimal(4000), 4, 1);
+
 		when(bankRepo.findById(Mockito.any(Integer.class))).thenReturn(bnk);
-				
+
 		when(custRepo.findById(Mockito.any(Integer.class))).thenReturn(cust);
+
+		when(accRepo.save(acc)).thenReturn(acc);
 		
-		when(accRepo.save(account)).thenReturn(account);
 		assertThat(accSer.createAccount(accReq), is(notNullValue()));
 
 	}
-	
-	@Test(expected=BankException.class)
-	public void createAccounts() {
-		Bank bank=new Bank(new BigDecimal(1200));
-		//bank.setId(1);
-		//Optional<Bank> bnk = Optional.of(bank);
+
+		@Test(expected = BankException.class)
+		public void createAccounts() {
+		
+		final Bank bank = new Bank(1, new BigDecimal(1000));
+		
 		final Optional<Bank> banks = Optional.empty();
 
-		Customer customer=new Customer("ritika",2131,bank);
-		//customer.setCustomerId(4);
-		//Optional<Customer> cust = Optional.of(customer);\
+		Customer customer = new Customer(1, bank, "aishu", 4842);
+
 		final Optional<Customer> customers = Optional.empty();
 
-		
-		Account account = new Account(customer,new BigDecimal(4000),bank);
-		AccountRequest accReq=new AccountRequest(1, 4, account);
-		
+		Account acc = new Account(1, customer, new BigDecimal(1000), bank);
+
+		AccountWrapper accReq = new AccountWrapper(new BigDecimal(4000), 4, 1);
+
 		when(bankRepo.findById(Mockito.any(Integer.class))).thenReturn(banks);
-				
+
 		when(custRepo.findById(Mockito.any(Integer.class))).thenReturn(customers);
-		
-		//when(accRepo.save(account)).thenReturn(account);
+
 		when(accSer.createAccount(accReq)).thenThrow(new BankException("details invalid"));
 
-
 	}
+		
+		
+		@Test
+		public void viewAccountById()
+		{
+			
+			final Bank bank = new Bank(1, new BigDecimal(1000));
+			
+			final Optional<Bank> banks = Optional.empty();
+
+			Customer customer = new Customer(1, bank, "aishu", 4842);
+
+			final Optional<Customer> customers = Optional.empty();
+			
+			Account acc = new Account(1, customer, new BigDecimal(1000), bank);
+			
+			Optional<Account> account = Optional.of(acc);
+
+			AccountWrapper accReq = new AccountWrapper(new BigDecimal(4000), 4, 1);
+			
+			Optional<AccountWrapper> req = Optional.of(accReq);
+			
+			when(accRepo.findById(1)).thenReturn(account);
+			
+			assertThat(accSer.getAccountDetailsById(1), is(notNullValue()));
+			
+			
+		}
+		
+		
 }
-*/

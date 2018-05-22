@@ -59,7 +59,7 @@ public class Customer {
 	public Customer(final int customerId,final  Bank bankId, final String name,final  int pin) {
 		super();
 		this.customerId = customerId;
-		this.bankId=bankId;
+		this.bankId=bankId; 
 		this.name = name;
 		this.pin = pin;
 	}
@@ -74,6 +74,9 @@ public class Customer {
 	
 	public void setBankId(final Bank bankId) {
 		this.bankId = bankId;
+	}
+	public @NotNull Bank getBankId() {
+		return bankId;
 	}
 	public String getName() {
 		return name;

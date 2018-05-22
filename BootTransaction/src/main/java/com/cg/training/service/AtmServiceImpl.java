@@ -37,17 +37,16 @@ public class AtmServiceImpl implements AtmService {
 	/**
 	 * AtmRepository reference
 	 */
-	@Autowired
+	@Autowired 
 	AtmRepository atmRepo;
 
 	@Override
-	public ATM createAtm(final AtmWrapper atm) {
+	public ATM createAtm(final AtmWrapper atm) { 
 		log.info("create atm");
 
 		try {
 
 			ATM newatm = new ATM();
-			newatm.setAtmId(11);
 			newatm.setAmount(atm.getAmount());
 			newatm.setBankId(bankServiceImpl.getBankDetailById(atm.getBankId()).get());
 
