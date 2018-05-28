@@ -1,12 +1,13 @@
 package com.cg.training.wrapper;
 
+import com.cg.training.model.BaseEntity;
 import com.cg.training.model.Customer;
 
 /**
  * @author aishwarya
  *
  */
-public class CustomerWrapper {
+public class CustomerWrapper extends BaseEntity {
 	
 	/**
 	 bank id 
@@ -26,6 +27,11 @@ public class CustomerWrapper {
 
 	public Customer getCustomer() {
 		return customer;
+	}
+
+	public CustomerWrapper() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	public void setCustomer(final Customer customer) {

@@ -46,7 +46,7 @@ public class CustomerTests {
 
 		final CustomerWrapper cust = new CustomerWrapper(1, customer);
 
-		when(bankRepo.findById(Mockito.any(Integer.class))).thenReturn(ob);
+		when(bankRepo.findByBankId(Mockito.any(Integer.class))).thenReturn(ob);
 		when(custRepo.save(customer)).thenReturn(customer);
 
 		assertThat(custSer.createCustomer(cust), is(notNullValue()));
@@ -63,7 +63,7 @@ public class CustomerTests {
 		final Optional<Bank> ob = Optional.empty();
 		final Customer customer = new Customer(1, bank, "aishu", 4842);
 		
-		when(bankRepo.findById(Mockito.any(Integer.class))).thenReturn(ob);
+		when(bankRepo.findByBankId(Mockito.any(Integer.class))).thenReturn(ob);
 		when(custRepo.save(customer)).thenReturn(customer);
 
 	}
@@ -82,7 +82,7 @@ public class CustomerTests {
 
 		final CustomerWrapper cust = new CustomerWrapper(1, customer);
 			
-		when(custRepo.findById(1)).thenReturn(cob);
+		when(custRepo.findByCustomerId(1)).thenReturn(cob);
 		
 		assertThat(custSer.getCustomerDetailById(1), is(notNullValue()));
 		

@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.cg.training.model.Bank;
 import com.cg.training.model.Customer;
+import com.cg.training.wrapper.CustomerUpdateWrapper;
 import com.cg.training.wrapper.CustomerWrapper;
 
 public interface CustomerService {
@@ -22,5 +23,7 @@ public interface CustomerService {
 	 
 
 	Optional<Customer> getCustomerDetailById(Integer id);
+	
+	Customer updateCustomer(CustomerUpdateWrapper req);
 
 }

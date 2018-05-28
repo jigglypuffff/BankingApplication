@@ -34,3 +34,4 @@ public class BankController {
 		return bankSer.getBankDetails();
 	}
 }
+ 

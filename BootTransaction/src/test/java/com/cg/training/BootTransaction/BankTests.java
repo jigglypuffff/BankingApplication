@@ -60,13 +60,13 @@ public class BankTests {
 	}
 	
 	
-	@Test
+	@Test 
 	public void viewBankById()
 	{
 		final Bank bank = new Bank(1,new BigDecimal(1000));
 		Optional<Bank> bnk = Optional.of(bank);
 		
-		when(bankRepo.findById(1)).thenReturn(bnk);
+		when(bankRepo.findByBankId(1)).thenReturn(bnk);
 		assertThat(bankSer.getBankDetailById(1), is(notNullValue()));
 	
 	}

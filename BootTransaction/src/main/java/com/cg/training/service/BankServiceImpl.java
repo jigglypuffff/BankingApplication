@@ -30,18 +30,14 @@ public class BankServiceImpl implements BankService {
 	@Override
 	public Bank createBank(final Bank bank) {
 		
-		if(bank.getBankId()>=1)
-		{
+		 
 			log.info("Create bank");
 		
 			return bankRepo.save(bank);
 		}
-		else
-		{
-			throw new BankException("Zero or Negative Id Not Found");
-		}
+		
 
-	}
+	
 
 	@Override
 	public List<Bank> getBankDetails() {
@@ -54,7 +50,7 @@ public class BankServiceImpl implements BankService {
 	public Optional<Bank> getBankDetailById(final Integer id) {
 		log.info("viewBankDetailsbyId");
 		try {
-			final Optional<Bank> bank = bankRepo.findById(id);
+			final Optional<Bank> bank = bankRepo.findByBankId(id);
 			return bank;
 		} catch (BankException e) {
 			throw new BankException("Id not found");

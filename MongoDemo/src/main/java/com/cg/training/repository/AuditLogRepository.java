@@ -1,11 +1,22 @@
 package com.cg.training.repository;
 
-import java.util.UUID;
-
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 
 import com.cg.training.model.AuditLog;
 
-public interface AuditLogRepository extends MongoRepository<AuditLog, UUID>{
+/**
+ * @author aishwarya
+ *
+ */
+public interface AuditLogRepository extends MongoRepository<AuditLog, String>{
+
+	@Query
+	void deleteByEventId(String eventId);
+
+	@Query
+	AuditLog findByEventId(String eventId);
+
+	
 
 }

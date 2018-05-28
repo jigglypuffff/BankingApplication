@@ -3,14 +3,18 @@ package com.cg.training.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.cg.training.model.Customer;
 import com.cg.training.service.BankService;
 import com.cg.training.service.CustomerService;
+import com.cg.training.wrapper.CustomerUpdateWrapper;
 import com.cg.training.wrapper.CustomerWrapper;
 
 /**
@@ -42,4 +46,17 @@ public class CustomerController {
 		return custSer.getCustomers();
 	}
 
+
+	@RequestMapping(value = "/update", method = RequestMethod.PUT)
+	public Customer updateCustomer(@RequestBody CustomerUpdateWrapper req) {
+		return custSer.updateCustomer(req);
+	}
+	
+	
+	@Bean
+    @LoadBalanced
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+	
 }

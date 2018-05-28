@@ -12,32 +12,32 @@ import javax.validation.constraints.NotNull;
  *
  */
 @Entity
-public class Customer {
+public class Customer extends BaseEntity implements Cloneable{
 
 	/**
 	 customer id 
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer customerId;
+	private Integer customerId; 
 	
 	/**
 	 bank id 
 	 */
-	@NotNull
+	
 	@ManyToOne(targetEntity=Bank.class)
 	Bank bankId;
 	
 	/**
 	 customer name 
 	 */
-	@NotNull
+	
 	private String name;
 	 
 	/**
 	 customer pin 
 	 */
-	@NotNull
+	
 	private int pin;
 	
 	
@@ -91,5 +91,9 @@ public class Customer {
 		this.pin = pin;
 	}
 	
+	@Override
+	 public Customer clone()throws CloneNotSupportedException{  
+			return (Customer)super.clone();  
+		   }
 	
 }

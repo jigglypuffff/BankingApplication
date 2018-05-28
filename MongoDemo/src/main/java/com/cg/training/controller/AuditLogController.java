@@ -1,15 +1,15 @@
 package com.cg.training.controller;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.training.model.AuditLog;
@@ -23,7 +23,7 @@ public class AuditLogController {
 	AuditLogService auditLogService;
 	
 	@PostMapping(value = "/create")
-	public AuditLog create(@RequestBody AuditLog auditLog) {
+	public AuditLog create(final @RequestBody AuditLog auditLog) {
 		return auditLogService.create(auditLog);
 	}
 	
@@ -32,10 +32,16 @@ public class AuditLogController {
 		return auditLogService.view();
 	}
 	
-	
-	@PutMapping
-	public AuditLog update(@RequestBody AuditLog auditLog,@RequestParam UUID eventId) {
-		return auditLogService.update(auditLog, eventId);
+	@PutMapping(value="/update/{eventId}")
+	public AuditLog update(final @PathVariable String eventId) {
+		return auditLogService.update(eventId);
 		
+	}
+	
+	@DeleteMapping(value="/delete/{eventId}")
+	public String delete(final @PathVariable String eventId)
+	{
+		auditLogService.delete(eventId);
+		return "success";
 	}
 }

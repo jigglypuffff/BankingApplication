@@ -65,7 +65,7 @@ public class AtmServiceImpl implements AtmService {
 
 		try {
 
-			final Optional<ATM> atmId = atmRepo.findById(req.getAtm().getatmId());
+			final Optional<ATM> atmId = atmRepo.findByatmId(req.getAtm().getatmId());
 			final ATM trueAtm = atmId.get();
 
 			final Bank trueBank = bankServiceImpl.getBankDetailById(req.getbId()).get();
@@ -101,7 +101,7 @@ public class AtmServiceImpl implements AtmService {
 		try {
 			log.info("withdraw money from atm");
 			
-			final Optional<ATM> atmId = atmRepo.findById(req.getAtm().getatmId());
+			final Optional<ATM> atmId = atmRepo.findByatmId(req.getAtm().getatmId());
 			final ATM trueAtm = atmId.get();
 
 			final Bank trueBank = bankServiceImpl.getBankDetailById(req.getbId()).get();
@@ -125,7 +125,7 @@ public class AtmServiceImpl implements AtmService {
 
 	@Override
 	public Optional<ATM> getAtmDetailById(final Integer id) {
-		Optional<ATM> atm = atmRepo.findById(id);
+		Optional<ATM> atm = atmRepo.findByatmId(id);
 		return atm;
 	}
 }

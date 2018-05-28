@@ -7,21 +7,20 @@ import java.util.logging.Logger;
 
 import javax.transaction.Transactional;
 
-import org.hibernate.cfg.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cg.training.exception.BankException;
+import com.cg.training.model.Account;
+import com.cg.training.model.Bank;
+import com.cg.training.model.Customer;
+import com.cg.training.model.Transaction;
 import com.cg.training.repo.AccountRepository;
 import com.cg.training.repo.BankRepository;
 import com.cg.training.repo.CustomerRepository;
 import com.cg.training.repo.TransactionRepository;
 import com.cg.training.wrapper.AccountWrapper;
 import com.cg.training.wrapper.WithdrawDepositReq;
-import com.cg.training.exception.BankException;
-import com.cg.training.model.Account;
-import com.cg.training.model.Bank;
-import com.cg.training.model.Customer;
-import com.cg.training.model.Transaction;
 
 /**
  * @author aishwarya
@@ -67,6 +66,12 @@ public class AccountServiceImpl implements AccountService {
 	 */
 	@Autowired
 	TransactionRepository trans;
+	
+	/**
+	 BankDenomination reference 
+	 */
+	/*@Autowired
+	BankDenoService bankdenoSer;*/
 
 	@Override
 	public Account createAccount(final AccountWrapper account) { 
@@ -117,7 +122,7 @@ public class AccountServiceImpl implements AccountService {
 		try {
 			final Integer accountId = withdraw.getAccount().getAccountId();
 
-			final Optional<Account> acc = accRepo.findById(accountId);
+			final Optional<Account> acc = accRepo.findByAccountId(accountId);
 
 			final Account account = acc.get();//// through account Id we fetched the account object
 
@@ -136,8 +141,10 @@ public class AccountServiceImpl implements AccountService {
 			accRepo.save(account);
 			
 			final Transaction trsansact = new Transaction(withdraw.getCustomerId(), accountId, withdrawAmt, "Withdraw");
-
+ 
 			trans.save(trsansact);
+			
+			//bankdenoSer.addDemomination(bank, withdrawAmt);
 
 			return "success";
 		
@@ -158,7 +165,7 @@ public class AccountServiceImpl implements AccountService {
 	
 	@Override
 	public Optional<Account> getAccountDetailsById(Integer id) {
-		Optional<Account> account = accRepo.findById(id);
+		Optional<Account> account = accRepo.findByAccountId(id);
 		return account;
 	}
 	
@@ -170,10 +177,10 @@ public class AccountServiceImpl implements AccountService {
 		log.info("Deposit To Account Section");
 
 		try {
-
+			
 			final Integer accountId = deposit.getAccount().getAccountId();
 
-			final Optional<Account> acc = accRepo.findById(accountId);
+			final Optional<Account> acc = accRepo.findByAccountId(accountId);
 
 			final Account account = acc.get(); // through account Id we fetched the account object
 
@@ -192,24 +199,26 @@ public class AccountServiceImpl implements AccountService {
 			trans.save(trsansact);
 
 			depositMoneyToBank(deposit);
-
+			
+			
 			return "success";
 		} catch (BankException e) {
 			throw new BankException("Id not found");
 		}
 	}
 
+	@Transactional
 	@Override
 	public String depositMoneyToBank(final WithdrawDepositReq deposit) {
 
 		log.info("Deposit To Bank Section");
 		try {
-			final Optional<Bank> bankId = bankRepo.findById(deposit.getBankId());
+			final Optional<Bank> bankId = bankRepo.findByBankId(deposit.getBankId());
 			final Bank bank = bankId.get(); // through bank Id we fetched the bank object
 
 			final Integer accountId = deposit.getAccount().getAccountId();
 
-			final Optional<Account> accobj = accRepo.findById(accountId);
+			final Optional<Account> accobj = accRepo.findByAccountId(accountId);
 
 			final Account accountobj = accobj.get(); // through account Id we fetched the account object
 
@@ -226,6 +235,8 @@ public class AccountServiceImpl implements AccountService {
 			bank.setAmount(updatedamount);
 
 			bankRepo.save(bank);
+			
+			//bankdenoSer.addDemomination(bank, depAmount);
 
 			return "success";
 		} catch (BankException e) {

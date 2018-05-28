@@ -44,7 +44,7 @@ public class AtmTests {
 		Optional<Bank> bnk = Optional.of(bank);
 		ATM atm = new ATM(new BigDecimal(5000),bank);
 		
-		when(bankRepo.findById(Mockito.any(Integer.class))).thenReturn(bnk);
+		when(bankRepo.findByBankId(Mockito.any(Integer.class))).thenReturn(bnk);
 		
 		when(atmRepo.save(atm)).thenReturn(atm);
 		

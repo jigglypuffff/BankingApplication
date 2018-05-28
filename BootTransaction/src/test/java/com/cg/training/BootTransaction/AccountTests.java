@@ -44,7 +44,7 @@ public class AccountTests {
 	private AccountServiceImpl accSer;
 
 	@Test
-	public void createAccount() {
+	public void createAccount() { 
 		
 		final Bank bank = new Bank(1, new BigDecimal(1000));
 
@@ -58,9 +58,9 @@ public class AccountTests {
 
 		AccountWrapper accReq = new AccountWrapper(new BigDecimal(4000), 4, 1);
 
-		when(bankRepo.findById(Mockito.any(Integer.class))).thenReturn(bnk);
+		when(bankRepo.findByBankId(Mockito.any(Integer.class))).thenReturn(bnk);
 
-		when(custRepo.findById(Mockito.any(Integer.class))).thenReturn(cust);
+		when(custRepo.findByCustomerId(Mockito.any(Integer.class))).thenReturn(cust);
 
 		when(accRepo.save(acc)).thenReturn(acc);
 		
@@ -83,9 +83,9 @@ public class AccountTests {
 
 		AccountWrapper accReq = new AccountWrapper(new BigDecimal(4000), 4, 1);
 
-		when(bankRepo.findById(Mockito.any(Integer.class))).thenReturn(banks);
+		when(bankRepo.findByBankId(Mockito.any(Integer.class))).thenReturn(banks);
 
-		when(custRepo.findById(Mockito.any(Integer.class))).thenReturn(customers);
+		when(custRepo.findByCustomerId(Mockito.any(Integer.class))).thenReturn(customers);
 
 		when(accSer.createAccount(accReq)).thenThrow(new BankException("details invalid"));
 
@@ -112,7 +112,7 @@ public class AccountTests {
 			
 			Optional<AccountWrapper> req = Optional.of(accReq);
 			
-			when(accRepo.findById(1)).thenReturn(account);
+			when(accRepo.findByAccountId(1)).thenReturn(account);
 			
 			assertThat(accSer.getAccountDetailsById(1), is(notNullValue()));
 			
