@@ -1,4 +1,4 @@
-package com.cg.training.controller;
+/*package com.cg.training.controller;
 
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
@@ -16,3 +16,4 @@ public class ApplicationConfig {
     }
 	
 }
+*/

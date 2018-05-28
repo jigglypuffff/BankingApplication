@@ -24,6 +24,6 @@ public interface CustomerService {
 
 	Optional<Customer> getCustomerDetailById(Integer id);
 	
-	Customer updateCustomer(CustomerUpdateWrapper req);
+	Customer updateCustomer(CustomerUpdateWrapper req,String newName);
 
 }

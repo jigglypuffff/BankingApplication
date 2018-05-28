@@ -32,7 +32,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Autowired
 	BankRepository bankRepository;
 	@Autowired
-	AuditServiceImpl auditSer;
+	AuditService auditSer;
 
 	@Override
 	public Customer createCustomer(final CustomerWrapper customer) {
@@ -66,7 +66,7 @@ public class CustomerServiceImpl implements CustomerService {
 		return customer;
 	}
 
-	public Customer updateCustomer(CustomerUpdateWrapper req) {
+	public Customer updateCustomer(CustomerUpdateWrapper req,String newName) {
 		Optional<Customer> customerOpt = customerRepo.findByCustomerId(req.getCustomerId());
 		Customer customer = customerOpt.get();
 		Customer oldCustomer;
@@ -74,14 +74,14 @@ public class CustomerServiceImpl implements CustomerService {
 		try {
 			oldCustomer = customer.clone();
 
-			customer.setName("doreamon");
+			customer.setName(newName);
 
 			System.out.println(oldCustomer);
 			System.out.println(customer);
 
 			AuditLog audit = new AuditLog(EventName.Customer.toString(), EventType.Updated.toString(),
 					customer.getUserId(), oldCustomer, customer);
-			auditSer.createAudit(audit);
+			auditSer.create(audit);
 
 			customerRepo.save(customer);
 

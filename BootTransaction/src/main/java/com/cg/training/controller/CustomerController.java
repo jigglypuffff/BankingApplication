@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -47,9 +48,9 @@ public class CustomerController {
 	}
 
 
-	@RequestMapping(value = "/update", method = RequestMethod.PUT)
-	public Customer updateCustomer(@RequestBody CustomerUpdateWrapper req) {
-		return custSer.updateCustomer(req);
+	@RequestMapping(value = "/update/{newName}", method = RequestMethod.PUT)
+	public Customer updateCustomer(@RequestBody CustomerUpdateWrapper req,@PathVariable String newName) {
+		return custSer.updateCustomer(req,newName);
 	}
 	
 	
