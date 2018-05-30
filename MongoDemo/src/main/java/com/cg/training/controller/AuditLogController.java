@@ -22,7 +22,7 @@ public class AuditLogController {
 	@Autowired
 	AuditLogService auditLogService;
 	
-	@PostMapping(value = "/create")
+	@PostMapping(path = "/create")
 	public AuditLog create(final @RequestBody AuditLog auditLog) {
 		return auditLogService.create(auditLog);
 	}
@@ -32,7 +32,7 @@ public class AuditLogController {
 		return auditLogService.view();
 	}
 	
-	@PutMapping(value="/update/{eventId}")
+	@PutMapping(path="/update/{eventId}")
 	public AuditLog update(final @PathVariable String eventId) {
 		return auditLogService.update(eventId);
 		
